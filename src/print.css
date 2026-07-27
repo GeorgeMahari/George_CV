@@ -1,0 +1,74 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #17181b !important;
+    font-size: 11px;
+  }
+
+  .fsm-nav,
+  .fsm-nav-mobile,
+  .fsm-nav-mobile-states,
+  .print-btn,
+  .scroll-progress {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .section {
+    padding-top: 16px !important;
+    break-inside: avoid;
+  }
+
+  .section:first-of-type {
+    padding-top: 0 !important;
+  }
+
+  .card,
+  .project-card {
+    background: #ffffff !important;
+    border: 1px solid #d8dade !important;
+    box-shadow: none !important;
+  }
+
+  .skill-tag,
+  .pill,
+  .project-tech span,
+  .timeline-note,
+  .state-tag {
+    background: #f2f2f2 !important;
+    color: #17181b !important;
+    border-color: #d8dade !important;
+  }
+
+  a {
+    color: #17181b !important;
+    text-decoration: underline;
+  }
+
+  .hero-eyebrow,
+  .section-eyebrow .state-tag,
+  .project-type {
+    color: #444 !important;
+  }
+
+  .project-grid,
+  .skills-grid,
+  .split-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .footer-note {
+    display: none;
+  }
+}
