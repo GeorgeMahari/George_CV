@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Github, Linkedin, Printer } from 'lucide-react'
+import { Github, Linkedin, Printer, Menu, X } from 'lucide-react'
 import { navStates, personal } from '../data/cvData.js'
 
 const StartArrow = () => (
@@ -51,14 +51,20 @@ export default function StateMachineNav() {
     return () => observerRef.current?.disconnect()
   }, [])
 
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
   const handleSelect = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setDrawerOpen(false)
   }
 
+  const toggleDrawer = () => setDrawerOpen((current) => !current)
+  const closeDrawer = () => setDrawerOpen(false)
   const handlePrint = () => window.print()
 
   return (
     <>
+      <div className={`fsm-nav-mobile-backdrop${drawerOpen ? ' open' : ''}`} onClick={closeDrawer} />
       {/* Desktop sidebar: rendered as a finite-state diagram */}
       <nav className="fsm-nav" aria-label="Navigare CV">
         <div className="fsm-nav-top">
@@ -85,16 +91,25 @@ export default function StateMachineNav() {
         </div>
       </nav>
 
-      {/* Mobile: compact top strip with the same states */}
+      {/* Mobile: compact top strip with a slide-in drawer */}
       <div className="fsm-nav-mobile">
         <div className="fsm-brand">
           <span className="name">{personal.name}</span>
         </div>
-        <button className="print-btn" onClick={handlePrint} aria-label="Printează CV">
-          <Printer size={14} />
-        </button>
+        <div className="fsm-mobile-actions">
+          <button className="toggle-btn" onClick={toggleDrawer} aria-label={drawerOpen ? 'Închide meniul' : 'Deschide meniul'}>
+            {drawerOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+          <button className="print-btn" onClick={handlePrint} aria-label="Printează CV">
+            <Printer size={14} />
+          </button>
+        </div>
       </div>
-      <div className="fsm-nav-mobile-states">
+      <div className={`fsm-nav-mobile-states${drawerOpen ? ' open' : ''}`}>
+        <div className="fsm-nav-mobile-states-header">
+          <span>Meniu</span>
+          <button className="toggle-btn" onClick={closeDrawer} aria-label="Închide meniul"><X size={18} /></button>
+        </div>
         <StateList activeId={activeId} onSelect={handleSelect} compact />
       </div>
     </>
